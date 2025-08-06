@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💌 Asking You Out Again</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to top right, #ffe4e1, #fffaf0);
+      color: #444;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 30px 20px;
+      text-align: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #c2185b;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+
+    .note {
+      background: #fff0f5;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      font-size: 1.1em;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 40px;
+      width: 100%;
+      max-width: 400px;
+      z-index: 2;
+    }
+
+    .choice-btn, .yes-btn, .back-btn {
+      background-color: #f8bbd0;
+      border: none;
+      padding: 14px 24px;
+      font-size: 1em;
+      border-radius: 30px;
+      cursor: pointer;
+      color: #880e4f;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .choice-btn:hover,
+    .back-btn:hover {
+      background-color: #f48fb1;
+      transform: scale(1.05);
+    }
+
+    .yes-btn {
+      background-color: #81c784;
+      color: #1b5e20;
+      margin-bottom: 10px;
+    }
+
+    .yes-btn:hover {
+      background-color: #66bb6a;
+      transform: scale(1.1);
+    }
+
+    #finalPrompt {
+      display: none;
+      margin-top: 20px;
+      max-width: 500px;
+      width: 100%;
+      z-index: 2;
+    }
+
+    #finalPrompt p {
+      font-size: 1.2em;
+      margin-bottom: 12px;
+    }
+
+    #flirtyLine {
+      font-style: italic;
+      color: #c2185b;
+      font-size: 1.05em;
+      margin-bottom: 20px;
+    }
+
+    .bloom {
+      font-size: 2em;
+      margin-top: 25px;
+      animation: pop 1s ease forwards;
+      opacity: 0;
+    }
+
+    .whatsapp-contact {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .whatsapp-contact p {
+      margin: 0;
+      font-size: 1em;
+      color: #333;
+    }
+
+    .whatsapp-btn img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .whatsapp-btn img:hover {
+      transform: scale(1.2);
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8em; }
+      .note { font-size: 1em; }
+      .choice-btn, .yes-btn, .back-btn {
+        font-size: 0.95em;
+        padding: 12px 20px;
+      }
+      #finalPrompt p { font-size: 1.05em; }
+      #flirtyLine { font-size: 1em; }
+      .whatsapp-btn img {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    .emoji-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.4;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.3; }
+      100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌸 Falling petals -->
+  <div class="emoji-bg" id="emoji-bg"></div>
+
+  <h1>💌 Asking You Out Again</h1>
+
+  <div class="note">
+    So... I've been thinking about how fun it was last time 💭<br>
+    And I really wanna do something again with you 💖<br><br>
+    Here's what I was thinking...
+  </div>
+
+  <div class="choices">
+    <button class="choice-btn" onclick="choosePlan('🍛 a Biriyani Date (plus ice cream & shopping 😋🛍️)', 'Biryani may be delicious... but I’m pretty sure you’d taste way better 😘', 'biriyani')">🍛 Biriyani Date</button>
+    <button class="choice-btn" onclick="choosePlan('🎬 a Movie Date (your pick!)', 'Movies are cool, but watching you smile is way better 😍', 'movie')">🎬 Movie Date</button>
+    <button class="choice-btn" onclick="choosePlan('🌳 a Park Walk (yes, I’ll hold your hand 😳)', 'A walk in the park is lovely... but holding your hand makes it perfect 🫰🌿', 'park')">🌳 Park Walk</button>
+  </div>
+
+  <div id="finalPrompt">
+    <p id="selectedPlanText">How about we...</p>
+    <div id="flirtyLine"></div>
+    <p>Would you like to go out again with me tomorrow? 🥺👉👈</p>
+    <button class="yes-btn" onclick="bloom()">Yes! 💖</button>
+    <button class="back-btn" onclick="goBack()">← Change My Mind</button>
+    <div class="bloom" id="bloomMsg">🌸 Yay! I’m already smiling just thinking about it 🌸</div>
+
+    <div class="whatsapp-contact">
+      <p>Or you can contact me here 😌</p>
+      <a href="https://wa.me/919064759339" target="_blank" class="whatsapp-btn">
+        <img src="/8ec315ee-dd3c-4134-83ae-35fbd09ab92e.png" alt="WhatsApp Icon">
+      </a>
+    </div>
+  </div>
+
+  <script>
+    let selectedPlanType = "";
+
+    function choosePlan(plan, line, type) {
+      selectedPlanType = type;
+      document.getElementById('selectedPlanText').innerText = `How about we go on ${plan}?`;
+      document.getElementById('flirtyLine').innerText = line;
+      document.querySelector('.choices').style.display = 'none';
+      document.getElementById('finalPrompt').style.display = 'block';
+      document.getElementById('bloomMsg').style.opacity = 0;
+      document.getElementById('bloomMsg').style.animation = 'none';
+    }
+
+    function bloom() {
+      const bloom = document.getElementById('bloomMsg');
+      bloom.style.opacity = 1;
+      bloom.style.animation = 'pop 0.8s ease forwards';
+    }
+
+    function goBack() {
+      document.getElementById('finalPrompt').style.display = 'none';
+      document.querySelector('.choices').style.display = 'flex';
+      document.getElementById('bloomMsg').style.opacity = 0;
+      document.getElementById('bloomMsg').style.animation = 'none';
+    }
+
+    // 🌸 Petals
+    const emojis = ["🌸", "💮", "🌷", "🌺", "🌼"];
+    const container = document.getElementById("emoji-bg");
+
+    for (let i = 0; i < 30; i++) {
+      const emoji = document.createElement("div");
+      emoji.classList.add("emoji");
+      emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * 100 + "vw";
+      emoji.style.animationDuration = (5 + Math.random() * 10) + "s";
+      emoji.style.animationDelay = Math.random() * 5 + "s";
+      container.appendChild(emoji);
+    }
+  </script>
+
+</body>
+</html>
